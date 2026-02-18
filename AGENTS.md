@@ -114,7 +114,7 @@ lib/
 
 ### Deployment
 - GitHub Actions workflow: `.github/workflows/deploy-vercel.yml`
-- Flutter version: 3.16.0 (stable channel)
+- Flutter version: 3.22.0 (stable channel)
 - Build output: `build/web/`
 
 ### Important Notes
