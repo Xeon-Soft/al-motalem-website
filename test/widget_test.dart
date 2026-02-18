@@ -7,7 +7,6 @@ library;
 import 'package:almotalem_website/presentation/components/common/animated_background.dart';
 import 'package:almotalem_website/presentation/screens/home/home_page.dart';
 import 'package:almotalem_website/presentation/screens/privacy_policy/privacy_policy_page.dart';
-import 'package:flutter/material.dart' hide CircularProgressIndicator;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:sizer/sizer.dart';
