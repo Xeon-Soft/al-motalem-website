@@ -1,0 +1,17 @@
+.dart_tool/
+.idea/
+.vscode/
+build/
+*.iml
+*.log
+.git/
+.gitignore
+.github/
+README.md
+analysis_options.yaml
+pubspec.lock
+server/
+bin/
+test/
+.devserver
+build.sh

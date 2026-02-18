@@ -3,10 +3,40 @@ name: Deploy to Vercel
 on:
   push:
     branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+env:
+  FLUTTER_VERSION: "3.16.0"
 
 jobs:
-  build-and-deploy:
+  test:
     runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: "stable"
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze code
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
+
+  build-and-deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
 
     steps:
       - name: Checkout repository
@@ -15,21 +45,28 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.16.0"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: "stable"
+          cache: true
 
-      - name: Install dependencies
+      - name: Clean and install dependencies
         run: |
           flutter clean
-          flutter pub get --verbose
+          flutter pub get
 
       - name: Build Flutter web
         run: flutter build web --release
 
+      - name: Verify build output
+        run: |
+          ls -la build/web/
+          test -f build/web/index.html || exit 1
+          test -f build/web/main.dart.js || exit 1
+
       - name: Copy API to build
         run: |
           mkdir -p build/web/api
-          cp api/privacy-policy.js build/web/api/
+          cp api/privacy_policy.dart build/web/api/
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest

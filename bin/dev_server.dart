@@ -1,4 +1,6 @@
 // bin/dev_server.dart
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import '../server/api_server.dart';
@@ -57,7 +59,7 @@ Future<void> _killPort(int port) async {
   if (Platform.isWindows) {
     // Method 1: Find by port and kill
     try {
-      final result = await Process.run('cmd', [
+      await Process.run('cmd', [
         '/c',
         'for /f "tokens=5" %a in (\'netstat -ano ^| findstr ":$port" ^| findstr "LISTENING"\') do @taskkill /F /PID %a 2>nul',
       ], runInShell: true);

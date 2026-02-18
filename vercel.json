@@ -1,16 +1,8 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    }
-  ],
+  "buildCommand": "flutter build web --release",
+  "outputDirectory": "build/web",
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1.js"
-    },
     {
       "handle": "filesystem"
     },
@@ -26,9 +18,16 @@
         {
           "key": "Access-Control-Allow-Origin",
           "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type"
         }
       ]
     }
-  ],
-  "includeFiles": ["assets/docs/**", "assets/images/**", "assets/fonts/**"]
+  ]
 }
