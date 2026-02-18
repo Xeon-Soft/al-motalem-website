@@ -1,21 +1,17 @@
 /// Widget tests for the Almotalem website.
-/// 
-/// Note: These tests run in the Dart VM, so web-specific code (like flutter_web_plugins)
-/// is not available. We test individual widgets in isolation.
 library;
 
 import 'package:almotalem_website/presentation/components/common/animated_background.dart';
 import 'package:almotalem_website/presentation/screens/home/home_page.dart';
 import 'package:almotalem_website/presentation/screens/privacy_policy/privacy_policy_page.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:shadcn_flutter/shadcn_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-/// Wraps a widget with required ancestors for testing.
 Widget _buildTestableWidget(Widget child) {
   return Sizer(
     builder: (context, orientation, deviceType) {
-      return ShadcnApp(
+      return MaterialApp(
         home: child,
       );
     },
@@ -26,7 +22,6 @@ void main() {
   group('HomePage', () {
     testWidgets('should render without errors', (WidgetTester tester) async {
       await tester.pumpWidget(_buildTestableWidget(const HomePage()));
-      // Use pump instead of pumpAndSettle because AnimatedBackground has infinite animation
       await tester.pump();
 
       expect(find.byType(HomePage), findsOneWidget);
@@ -93,7 +88,6 @@ void main() {
     testWidgets('should display loading state initially', (WidgetTester tester) async {
       await tester.pumpWidget(_buildTestableWidget(const PrivacyPolicyPage()));
       
-      // Should show loading indicator before data loads
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       expect(find.text('Loading privacy policy...'), findsOneWidget);
     });

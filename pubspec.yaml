@@ -23,9 +23,6 @@ dependencies:
   # Markdown rendering
   markdown_widget: ^2.3.2+8
   
-  # UI Components (downgraded for Flutter 3.27 compatibility)
-  shadcn_flutter: ^0.0.24
-  
   # Server (for dev only)
   shelf: ^1.4.2
   shelf_cors_headers: ^0.1.5
